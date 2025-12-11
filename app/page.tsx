@@ -18,9 +18,6 @@ export default function HomePage() {
             <Link href="#features" className="text-gray-400 hover:text-white transition-colors">
               Features
             </Link>
-            <Link href="#stocks" className="text-gray-400 hover:text-white transition-colors">
-              Stocks
-            </Link>
           </nav>
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm" asChild className="text-gray-300 hover:text-white hover:bg-gray-800">
@@ -47,8 +44,8 @@ export default function HomePage() {
               <span className="text-emerald-400"> real-time</span>
             </h1>
             <p className="text-lg text-gray-400 max-w-xl mx-auto leading-relaxed">
-              Monitor your favorite stocks with live price updates every second. Build your watchlist and track your
-              portfolio performance.
+              Monitor your favorite stocks with live price updates every second. Build your portfolio and track your
+              performance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Button size="lg" className="gap-2 bg-emerald-500 hover:bg-emerald-600 text-white h-12 px-8" asChild>
@@ -65,29 +62,6 @@ export default function HomePage() {
               >
                 <Link href="/auth/login">Sign In</Link>
               </Button>
-            </div>
-          </div>
-
-          {/* Supported Stocks */}
-          <div id="stocks" className="mt-20 max-w-4xl mx-auto">
-            <p className="text-center text-gray-500 text-sm mb-6">Supported Stocks</p>
-            <div className="grid grid-cols-5 gap-4">
-              {[
-                { ticker: "GOOG", name: "Alphabet", price: "$141.80" },
-                { ticker: "TSLA", name: "Tesla", price: "$248.50" },
-                { ticker: "AMZN", name: "Amazon", price: "$186.40" },
-                { ticker: "META", name: "Meta", price: "$505.75" },
-                { ticker: "NVDA", name: "NVIDIA", price: "$467.30" },
-              ].map((stock) => (
-                <div
-                  key={stock.ticker}
-                  className="bg-[#12121a] border border-gray-800 rounded-xl p-4 text-center hover:border-emerald-500/30 transition-colors"
-                >
-                  <div className="text-lg font-bold text-white">{stock.ticker}</div>
-                  <div className="text-xs text-gray-500">{stock.name}</div>
-                  <div className="text-sm text-emerald-400 mt-1">{stock.price}</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -129,8 +103,8 @@ export default function HomePage() {
               },
               {
                 icon: BarChart3,
-                title: "Custom Watchlist",
-                description: "Subscribe to any of the 5 supported stocks to build your watchlist.",
+                title: "Custom Portfolio",
+                description: "Subscribe to any of the 5 supported stocks to build your portfolio.",
               },
             ].map((feature) => (
               <div
