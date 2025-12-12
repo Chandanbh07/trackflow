@@ -20,45 +20,49 @@ export default function SignUpPage() {
   const router = useRouter()
 
   const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const supabase = createClient()
-    setIsLoading(true)
-    setError(null)
+  e.preventDefault()
+  const supabase = createClient()
+  setIsLoading(true)
+  setError(null)
 
-    if (password !== repeatPassword) {
-      setError("Passwords do not match")
-      setIsLoading(false)
-      return
-    }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters")
-      setIsLoading(false)
-      return
-    }
-
-    try {
-      const { data, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/dashboard`,
-        },
-      })
-
-      if (signUpError) throw signUpError
-
-      // Wait for the auto-confirm trigger to execute
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-
-      await supabase.auth.signOut()
-      router.push("/auth/login")
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred during signup")
-    } finally {
-      setIsLoading(false)
-    }
+  if (password !== repeatPassword) {
+    setError("Passwords do not match")
+    setIsLoading(false)
+    return
   }
+
+  if (password.length < 6) {
+    setError("Password must be at least 6 characters")
+    setIsLoading(false)
+    return
+  }
+
+  try {
+    const { data, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL || `${window.location.origin}/dashboard`,
+      },
+    })
+
+    if (signUpError) throw signUpError
+
+    // Wait for the auto-confirm trigger to execute
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+
+    // Sign out the user (removes the auto-created session)
+    await supabase.auth.signOut()
+
+    // After successful signup, redirect to login page
+    router.push("/auth/login")
+
+  } catch (error: unknown) {
+    setError(error instanceof Error ? error.message : "An error occurred during signup")
+  } finally {
+    setIsLoading(false)
+  }
+}
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] flex">
@@ -180,3 +184,4 @@ export default function SignUpPage() {
     </div>
   )
 }
+
