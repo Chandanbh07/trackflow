@@ -51,20 +51,8 @@ export default function SignUpPage() {
       // Wait for the auto-confirm trigger to execute
       await new Promise((resolve) => setTimeout(resolve, 1500))
 
-      // Try to sign in after signup (auto-confirm trigger should have confirmed the email)
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
-
-      if (signInError) {
-        // If sign in fails, show success message and redirect to login
-        router.push("/auth/sign-up-success")
-        return
-      }
-
-      // Successfully signed in, go to dashboard
-      router.push("/dashboard")
+      await supabase.auth.signOut()
+      router.push("/auth/login")
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred during signup")
     } finally {
