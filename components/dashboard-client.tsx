@@ -20,6 +20,7 @@ import {
   Settings,
   Search,
   Briefcase,
+  Minus,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Input } from "@/components/ui/input"
@@ -232,6 +233,17 @@ export default function DashboardClient({ userEmail, userId, initialSubscription
       const stock = prev.get(ticker)
       if (stock) {
         newPrices.set(ticker, { ...stock, shares: stock.shares + 1 })
+      }
+      return newPrices
+    })
+  }
+
+  const handleRemoveShares = (ticker: string) => {
+    setStockPrices((prev) => {
+      const newPrices = new Map(prev)
+      const stock = prev.get(ticker)
+      if (stock && stock.shares > 0) {
+        newPrices.set(ticker, { ...stock, shares: stock.shares - 1 })
       }
       return newPrices
     })
@@ -538,10 +550,10 @@ export default function DashboardClient({ userEmail, userId, initialSubscription
                 </Card>
               </div>
 
-              {/* Your Stocks */}
+              {/* Subscribed Stocks */}
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold text-gray-900">Your Stocks</h2>
+                  <h2 className="text-lg font-semibold text-gray-900">Subscribed Stocks</h2>
                   {searchQuery && (
                     <p className="text-sm text-gray-500">
                       Showing {filteredStocks.length} of {subscriptions.length} stocks
@@ -586,11 +598,11 @@ export default function DashboardClient({ userEmail, userId, initialSubscription
                             </div>
                             <Button
                               variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 text-gray-400 hover:text-red-600 hover:bg-red-50"
+                              size="sm"
+                              className="text-red-600 hover:text-red-700 hover:bg-red-50"
                               onClick={() => handleUnsubscribe(stock.ticker)}
                             >
-                              <X className="h-4 w-4" />
+                              Remove
                             </Button>
                           </div>
 
@@ -613,6 +625,14 @@ export default function DashboardClient({ userEmail, userId, initialSubscription
                             <div className="text-right">
                               <p className="text-xs text-gray-500">Shares</p>
                               <div className="flex items-center gap-2">
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-7 w-7 text-red-600 hover:bg-red-50"
+                                  onClick={() => handleRemoveShares(stock.ticker)}
+                                >
+                                  <Minus className="h-4 w-4" />
+                                </Button>
                                 <p className="text-lg font-semibold text-gray-900">{stock.shares}</p>
                                 <Button
                                   variant="ghost"
@@ -678,7 +698,7 @@ export default function DashboardClient({ userEmail, userId, initialSubscription
                           onClick={() => handleAddStock(ticker)}
                         >
                           <Plus className="h-4 w-4 mr-1" />
-                          Add
+                          Subscribe
                         </Button>
                       </div>
                     ))}
