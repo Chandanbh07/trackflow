@@ -10,22 +10,23 @@ export const metadata: Metadata = {
   title: "TradeFlow - Stock Trading Dashboard",
   description: "Professional stock monitoring dashboard with real-time price updates",
   icons: {
-  icon: [
-    {
-      url: "/tf-icon-32x32.png",
-      media: "(prefers-color-scheme: light)",
-    },
-    {
-      url: "/tf-icon-dark-32x32.png",
-      media: "(prefers-color-scheme: dark)",
-    },
-    {
-      url: "/tf-icon.svg",
-      type: "image/svg+xml",
-    },
-  ],
-  apple: "/tf-apple-icon.png",
-},
+    icon: [
+      {
+        url: "/tf-icon-32x32.png",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/tf-icon-dark-32x32.png",
+        media: "(prefers-color-scheme: dark)",
+      },
+      {
+        url: "/tf-icon.svg",
+        type: "image/svg+xml",
+      },
+    ],
+    apple: "/tf-apple-icon.png",
+  },
+    generator: 'v0.app'
 }
 
 export default function RootLayout({
@@ -34,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body className={`${inter.className} antialiased`}>
         {children}
         <Analytics />
